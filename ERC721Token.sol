@@ -127,7 +127,7 @@ contract ERC721Token is SupportsInterfaceWithLookup, ERC721BasicToken, ERC721 {
    //number 15
   function addTokenTo(address _to, uint256 _tokenId) internal {
     // YOUR CODE HERE
-
+    ownedTokens[_to][_tokenId];
   }
 
   /**
@@ -165,7 +165,8 @@ contract ERC721Token is SupportsInterfaceWithLookup, ERC721BasicToken, ERC721 {
    // number 16
   function _mint(address _to, uint256 _tokenId) internal {
     // YOUR CODE HERE
-
+    require(!exists(_tokenId));
+    addTokenTo(_to,_tokenId);
   }
 
   /**

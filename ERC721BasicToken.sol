@@ -1,3 +1,4 @@
+
 pragma solidity ^0.4.24;
 
 import "./ERC721Basic.sol";
@@ -47,6 +48,7 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
    // number 1
   function balanceOf(address _owner) public view returns (uint256) {
     // YOUR CODE HERE
+    return ownedTokensCount[_owner];
 
   }
 
@@ -59,7 +61,7 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
     //hint: the owner should be exist to return its address
   function ownerOf(uint256 _tokenId) public view returns (address) {
     // YOUR CODE HERE
-
+    return tokenOwner[_tokenId];
   }
 
   /**
@@ -70,7 +72,7 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
     // number 3
   function exists(uint256 _tokenId) public view returns (bool) {
     // YOUR CODE HERE
-
+    return exists(_tokenId);
   }
     /**
    * @dev Tells whether an operator is approved by a given owner
@@ -88,7 +90,7 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
     returns (bool)
   {
     // YOUR CODE HERE
-
+    return operatorApprovals[_owner][_operator];
   }
 
 
@@ -104,7 +106,8 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
     // hint: the approver should be the owner or should be approved for all tokens that owned by the owner
   function approve(address _to, uint256 _tokenId) public {
     // YOUR CODE HERE
-
+    require(ownerOf(_tokenId) == msg.sender);
+     approve(_to , _tokenId);
   }
 
   /**
@@ -115,6 +118,7 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
     // number 6
   function getApproved(uint256 _tokenId) public view returns (address) {
     // YOUR CODE HERE
+    return getApproved(_tokenId);
 
   }
 
@@ -127,6 +131,7 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
     // number 7
   function setApprovalForAll(address _to, bool _approved) public {
     // YOUR CODE HERE
+    setApprovalForAll(_to,_approved);
 
   }
 
@@ -147,7 +152,10 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
     returns (bool)
   {
     // YOUR CODE HERE
-
+    if(getApproved(_tokenId) == _spender){
+        
+        return true;
+    }
   }
   /**
    * @dev Internal function to clear current approval of a given token ID
@@ -158,7 +166,8 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
     // number 9
   function clearApproval(address _owner, uint256 _tokenId) internal {
     // YOUR CODE HERE
-
+    require(_owner == msg.sender);
+    approve(0,_tokenId);
   }
 
   /**
@@ -169,7 +178,9 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
     // number 10
   function removeTokenFrom(address _from, uint256 _tokenId) internal {
     // YOUR CODE HERE
-
+    require(ownerOf(_tokenId) == _from);
+    tokenOwner[_tokenId] = 0;
+    
   }
 
   /**
@@ -180,6 +191,7 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
     // number 11
   function addTokenTo(address _to, uint256 _tokenId) internal {
     // YOUR CODE HERE
+    tokenOwner[_tokenId] = _to;
 
   }
 
@@ -200,7 +212,7 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
     public
   {
     // YOUR CODE HERE
-
+    transferFrom(_from,_to,_tokenId);
   }
 
   /**

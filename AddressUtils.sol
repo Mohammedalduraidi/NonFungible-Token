@@ -13,7 +13,7 @@ library AddressUtils {
    * @param _account address of the account to check
    * @return whether the target address is a contract
    */
-  function isContract(address _account) internal view returns (bool) {
+    function isContract(address _account) internal view returns (bool) {
     uint256 size;
     // XXX Currently there is no better way to check if there is a contract in an address
     // than to check the size of the code at that address.
